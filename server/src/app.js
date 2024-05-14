@@ -1,16 +1,18 @@
 const express = require("express")
+const cors = require('cors');
 const bodyParser = require("body-parser")
 
 const morgan = require("morgan")
 
 const app = express()
 app.use(morgan("combined"))
+app.use(cors());
 app.use(bodyParser.json())
 
 
-app.get("/status",(req,res)=>{
+app.post("/register",(req,res)=>{
     res.send({
-        message:"deneme2"
+        message:`alo ${req.body.name}registered`,
     })
 })
 
