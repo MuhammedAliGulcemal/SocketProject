@@ -1,6 +1,6 @@
 <template>
-    
-        <label for="name">Name:</label>
+        <div class="wrapper">
+            <label for="name">Name:</label>
         <input type="text" id="name" v-model="name" required>
 
         <label for="username">Username:</label>
@@ -10,6 +10,8 @@
         <input type="password" id="password" v-model="password" required>
 
         <button @click="register">Register</button>
+        </div>
+       
   
 </template>
 
@@ -37,3 +39,16 @@ export default {
     }
 };
 </script>
+<style scoped>
+
+    .wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        background-color: yellow;
+        padding-block: 10%;
+    }
+</style>
