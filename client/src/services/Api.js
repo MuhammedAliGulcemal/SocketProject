@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export default () => {
+export default () => {//baseurl koyma
     return axios.create({
         baseURL: "https://socketproject.onrender.com"
     });

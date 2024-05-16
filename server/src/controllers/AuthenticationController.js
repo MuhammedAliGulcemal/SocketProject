@@ -1,6 +1,6 @@
 const mysql = require("mysql")
 
-const dbConnection = mysql.createPool({
+const dbConnection = mysql.createPool({//veritabani baglantisi
     connectionLimit: 100,
     host:  "sql7.freemysqlhosting.net",
     user: "sql7706994",
@@ -10,11 +10,11 @@ const dbConnection = mysql.createPool({
 });
 
 
-exports.login = (req, res) => {
+exports.login = (req, res) => {//login yaptiginda
     const username = req.body.username;
     const password = req.body.password;
     
-    dbConnection.query("SELECT * FROM user WHERE username = ? AND password = ?", [username, password], (error, results) => {
+    dbConnection.query("SELECT * FROM user WHERE username = ? AND password = ?", [username, password], (error, results) => {//sifre ve kullanici adina gore kullaniciyi al
         if (error) {
             console.log(error);
             return res.status(500).send("Internal Server Error");
@@ -25,7 +25,7 @@ exports.login = (req, res) => {
             });
         } else {
             const result = results
-            dbConnection.query("SELECT * FROM projects WHERE creator_username = ?", [username], (error, projects) => {
+            dbConnection.query("SELECT * FROM projects WHERE creator_username = ?", [username], (error, projects) => {//kullaniciya ait projeleri al
                 if (error) {
                     console.log(error);
                     return res.status(500).send("Internal Server Error");
@@ -43,14 +43,14 @@ exports.login = (req, res) => {
 };
 
 
-exports.register = (req, res) => {
+exports.register = (req, res) => {//kayit olma
     try {
         console.log(req)
         const name = req.body.name
         const username = req.body.username
         const password = req.body.password
 
-        dbConnection.query("select username from user where username = ? ", [username], (error, results) => {
+        dbConnection.query("select username from user where username = ? ", [username], (error, results) => {//kullanici adi mevcut mu diye bakma
             if (error) {
                 console.log(error)
                 return res
@@ -66,7 +66,7 @@ exports.register = (req, res) => {
 
         })
 
-        dbConnection.query("insert into user set ? ", { name: name, username: username, password: password }, (error, results) => {
+        dbConnection.query("insert into user set ? ", { name: name, username: username, password: password }, (error, results) => {//kayit etme
             if (error) {
                 console.log(error)
                 return res

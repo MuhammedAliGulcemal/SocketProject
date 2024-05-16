@@ -1,6 +1,6 @@
 import Api from "@/services/Api"
 
-export default {
+export default {//backend ile iletisim
     create(credentials) {
         return Api().post("create", credentials)
     },

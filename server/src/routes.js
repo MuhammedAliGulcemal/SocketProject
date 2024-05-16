@@ -1,7 +1,7 @@
 const AuthenticationController = require("./controllers/AuthenticationController")
 const ProjectController = require("./controllers/ProjectController")
 
-module.exports = (app) => {
+module.exports = (app) => {//rotalar sayfasi
     app.post("/register",
         AuthenticationController.register
     )

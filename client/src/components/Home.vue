@@ -3,12 +3,12 @@
         <h1>Welcome {{ username }}</h1>
         <div style="display: flex; gap: 2rem;">
             <div style="display: flex; flex-direction: column;">
-                <label for="projectname">Project name:</label>
+                <label for="projectname">Project name:</label><!--Proje olusturma-->
                 <input type="text" id="projectname" v-model="projectname" required>
                 <button @click="createProject">Create Project</button>
             </div>
             <div style="display: flex; flex-direction: column;">
-                <label for="projectkey">Project key:</label>
+                <label for="projectkey">Project key:</label><!--Key ile katilma-->
                 <input type="number" id="projectkey" v-model="projectkey" required>
                 <button @click="addProject">Add Project</button>
             </div>
@@ -16,7 +16,7 @@
     </div>
     <div class="list-div">
         <ul>
-            <h1>Created Projects</h1>
+            <h1>Created Projects</h1><!--Olusturdugu projeler-->
             <li v-for="project in projects" :key="project.id">
                 <span class="project-name">Project name: {{ project.name }}</span>
                 <span class="project-key">Key: {{ project.project_key }}</span>
@@ -24,14 +24,14 @@
             </li>
         </ul>
         <ul>
-            <h1>Your Projects</h1>
+            <h1>Your Projects</h1><!--Var oldugu projeler-->
             <li v-for="project in hasProjectsArr" :key="project.id">
                 <span class="project-name">Project name: {{ project.name }}</span>
                 <button @click="getProjectUsers(project.id)">Get users</button>
             </li>
         </ul>
         <ul>
-            <h1>Active Users</h1>
+            <h1>Active Users</h1><!--Secilen projedeki aktif kullanicilar-->
             <li v-for="(i, index) in projectusers" :key="i.id">
                 <span class="project-name" :class="getUserStatus(i.id)">Username: {{ i.username }}</span>
                 <button v-if="i.username !== username" @click="openChat(i)">Open Chat</button>
@@ -45,7 +45,7 @@
     <div id="users">
         <div class="wrapperUser">
             <div>
-                <div>GLOBAL CHAT</div>
+                <div>GLOBAL CHAT</div><!--Global sohbet-->
                 <div :id="'output' + 0" class="output"></div>
                 <input type="text" :id="'mesaj' + 0" v-model="message[0]">
                 <button @click="sendMessage(0)">Send Message</button>
@@ -57,7 +57,7 @@
         </div>
         <div class="wrapperUser" v-if="showChat">
             <div>
-                <div>CHAT WITH {{ messageusername }}</div>
+                <div>CHAT WITH {{ messageusername }}</div><!--Kisisel sohbet-->
                 <div :id="'output' + 1" class="output"></div>
                 <input type="text" :id="'mesaj' + 1" v-model="message[1]">
                 <button @click="sendMessage(1)">Send Message</button>
@@ -100,8 +100,7 @@ export default {
     created() {
         this.fetchProjects();
     },
-    mounted() {
-
+    mounted() {//socket olusturma sockete veri yazma
         this.socket = io('https://socketproject.onrender.com', { transports: ['websocket'] });
         this.socket.on('connect', () => {
             console.log('Connected to server');
@@ -147,10 +146,10 @@ export default {
         this.socket.disconnect();
     },
     methods: {
-        getUserStatus(id) {
+        getUserStatus(id) {//online kullanicilari alma
             return this.idList.includes(id) ? 'online' : 'offline';
         },
-        async openChat(element) {
+        async openChat(element) {//kisisel sohber olusturma
             this.messageusername = element.username;
             this.showChat = true;
             if (document.getElementById("output1") != null) {
@@ -161,9 +160,8 @@ export default {
 
         },
 
-        async fetchProjects() {
+        async fetchProjects() {//projeleri alma
             try {
-
                 const response = await UserService.getProjects(this.username);
                 this.projects = response.data.projects;
                 this.messageDebug = response.data.message
@@ -175,7 +173,7 @@ export default {
                 console.error("Error fetching projects:", error);
             }
         },
-        async hasProjects() {
+        async hasProjects() {//var olan projeleri alma
             try {
                 const response2 = await UserService.hasProjects(this.userid);
                 this.hasProjectsArr = response2.data.hasProjects;
@@ -186,7 +184,7 @@ export default {
                 console.error("Error fetching projects:", error);
             }
         },
-        async getProjectUsers(projectId) {
+        async getProjectUsers(projectId) {//projelerdeki kullanicilari alma
             this.projectusers = [];
 
             try {
@@ -198,7 +196,7 @@ export default {
             } catch (error) {
                 console.error("Error fetching project users:", error);
             }
-        }, async sendFile(index) {
+        }, async sendFile(index) {//dosya gonderme
             const fileInput = document.getElementById('file' + index);
             const file = fileInput.files[0];
             const reader = new FileReader();
@@ -212,13 +210,9 @@ export default {
                     index: index
                 });
             };
-
             reader.readAsArrayBuffer(file);
-        }
-
-
-        ,
-        async sendMessage(index) {
+        },
+        async sendMessage(index) {//mesaj gonderma
 
             this.socket.emit('message', {
                 message: this.message[index],
@@ -227,8 +221,7 @@ export default {
             });
             this.message[index] = '';
         },
-
-        async createProject() {
+        async createProject() {//proje olusturma
             try {
                 await UserService.create({
                     name: this.projectname,
@@ -240,7 +233,7 @@ export default {
                 this.error = error.response.data.error
             }
         },
-        async addProject() {
+        async addProject() {//proje ekleme
             try {
                 await UserService.addProject({
                     projectkey: this.projectkey,
@@ -254,7 +247,6 @@ export default {
 
     }
 };
-
 </script>
 
 <style scoped>
