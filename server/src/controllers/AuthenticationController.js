@@ -2,10 +2,10 @@ const mysql = require("mysql")
 
 const dbConnection = mysql.createPool({
     connectionLimit: 100,
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "socket",
+    host:  "sql7.freemysqlhosting.net",
+    user: "sql7706994",
+    password:  "xXKqklYLNM",
+    database: "sql7706994",
     debug: false
 });
 

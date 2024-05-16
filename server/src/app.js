@@ -58,10 +58,10 @@ io.on("connection", (socket) => {
 
 const dbConnection = mysql.createPool({
     connectionLimit: 100,
-    host: process.env.DB_HOST || "localhost",
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_NAME || "socket",
+    host: process.env.DB_HOST || "sql7.freemysqlhosting.net",
+    user: process.env.DB_USER || "sql7706994",
+    password: process.env.DB_PASSWORD || "xXKqklYLNM",
+    database: process.env.DB_NAME || "sql7706994",
     debug: false,
 });
 
