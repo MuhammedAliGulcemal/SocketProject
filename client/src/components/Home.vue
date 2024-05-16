@@ -102,7 +102,7 @@ export default {
     },
     mounted() {
 
-        this.socket = io('http://localhost:8081', { transports: ['websocket'] });
+        this.socket = io('https://socketproject.onrender.com', { transports: ['websocket'] });
         this.socket.on('connect', () => {
             console.log('Connected to server');
             console.log('Socket ID:', this.socket.id);
